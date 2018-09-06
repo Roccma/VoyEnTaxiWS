@@ -1,0 +1,17 @@
+function renderHtmlEmail($body) {
+    ob_start();
+    include ('my_html_email.php');
+    return ob_get_clean();
+}
+In your my_html_email.php file you would have something like so:
+
+<html>
+    <body>
+        <p>....<p>
+        <!-- the body -->
+        <?php echo $body; ?>
+    </body>
+</html>
+And
+
+ $mailer->Body = renderHtmlEmail($contact_message);
