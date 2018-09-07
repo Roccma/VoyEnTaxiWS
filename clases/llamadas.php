@@ -80,7 +80,7 @@ class Llamadas extends ClaseBase{
 		$cantidad = $resultado->fetch_object()->cantidad;
 
 		if($cantidad == 0){
-			$stmt = DB::conexion()->prepare("INSERT INTO llamadas (cedulaUsuario, estado, fecha_hora_inicial, latitud_inicial, longitud_inicial, session_finalizar, token, cantidad_desconexiones, dias_persistencia, expirada) VALUES(?,?,?, ?, ?, ?, ?, ?, ?, 0)");
+			$stmt = DB::conexion()->prepare("INSERT INTO llamadas (cedulaUsuario, estado, fecha_hora_inicial, latitud_inicial, longitud_inicial, session_finalizar, token, cantidad_desconexiones, dias_persistencia, desconectada, expirada) VALUES(?,?,?, ?, ?, ?, ?, ?, ?, 0, 0)");
 			$userid = $this->getCedula();
 			$lat = $this->getLatitudI();
 			$long = $this->getLongitudI();
