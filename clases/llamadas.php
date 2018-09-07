@@ -118,7 +118,7 @@ class Llamadas extends ClaseBase{
 	}
 
 	public function FinalizarLLamada(){
-		if ($stmt = DB::conexion()->prepare("SELECT * FROM llamadas WHERE id=$this->id")){
+		/*if ($stmt = DB::conexion()->prepare("SELECT * FROM llamadas WHERE id=$this->id")){
 			$stmt->execute();
 			$resultado = $stmt->get_result();
 			if ($resultado->num_rows<1)
@@ -127,7 +127,7 @@ class Llamadas extends ClaseBase{
 				if ($resultado->fetch_object()->estado==0)
 					return 1;
 			}
-		}
+		}*/
 		if ($stmt = DB::conexion()->prepare("UPDATE llamadas SET estado=0,fecha_hora_final=now() - INTERVAL 3 HOUR,latitud_final=?,longitud_final=? WHERE id=$this->id")){
 			$stmt->bind_param("ss",$this->latitud_final,$this->longitud_final);
 			$stmt->execute();
