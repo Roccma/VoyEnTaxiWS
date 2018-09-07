@@ -150,7 +150,7 @@ class Usuario extends ClaseBase{
 		$stmt = DB::conexion()->prepare("DELETE FROM keep_alive WHERE cedulaUsuario = ?");
 		$stmt->bind_param("i",$this->cedula);
 		$stmt->execute();
-		$stmt = DB::conexion()->prepare("INSERT INTO keep_alive VALUES(?,NOW())");
+		$stmt = DB::conexion()->prepare("INSERT INTO keep_alive VALUES(?,NOW() - INTERVAL 3 HOUR)");
 		$stmt->bind_param("i",$this->cedula);
 		$stmt->execute();
 		return array("result" => true, "message" => "ok");

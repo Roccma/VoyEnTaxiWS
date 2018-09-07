@@ -128,7 +128,7 @@ class Llamadas extends ClaseBase{
 					return 1;
 			}
 		}
-		if ($stmt = DB::conexion()->prepare("UPDATE llamadas SET estado=0,fecha_hora_final=now(),latitud_final=?,longitud_final=? WHERE id=$this->id")){
+		if ($stmt = DB::conexion()->prepare("UPDATE llamadas SET estado=0,fecha_hora_final=now() - INTERVAL 3 HOUR,latitud_final=?,longitud_final=? WHERE id=$this->id")){
 			$stmt->bind_param("ss",$this->latitud_final,$this->longitud_final);
 			$stmt->execute();
 			return 2; 
