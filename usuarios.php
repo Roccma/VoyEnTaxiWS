@@ -4,6 +4,10 @@ require_once('libs/Slim/Slim.php');
 require_once('controladores/ctrl_index.php');
 require_once('controladores/ctrl_usuario.php');
 
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
+
 ini_set("default_socket_timeout", 6000);
 
 \Slim\Slim::registerAutoloader();
