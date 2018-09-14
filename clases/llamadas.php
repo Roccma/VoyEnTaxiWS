@@ -310,11 +310,58 @@ class Llamadas extends ClaseBase{
 				$i++;
 			}
 		}
-		$resultados["meses"] = $meses;
-		$resultados["anios"] = $anios;
-		$resultados["horas"] = $horas;
-		return $resultados;
+		
+		if ($stmt = DB::conexion()->prepare("SELECT *, DATE_FORMAT(fecha_hora_inicial, '%Y-%m-%d') as fecha_desde, TIMESTAMPDIFF(SECOND, fecha_hora_inicial, fecha_hora_final) AS diff FROM llamadas WHERE estado = 0 ORDER BY fecha_hora_inicial ASC")){
+			$stmt->execute();
+			$resultado = $stmt->get_result();
+			$llamadas = array();
+			$cantidadLlamadas = $resultado->num_rows;
+			while ( $fila = $resultado->fetch_object()){
+				$llamadas[] = $fila;
+			}
+		}
 
+		if($cantidadLlamadas > 0){
+			$fecha_desde = $llamadas[0]->fecha_desde;
+			$cantidadDias = 0;
+			while($fecha_desde != date('Y-m-d')){
+				//$cantidad2++;
+				$cantidadDias++;
+				$fecha_desde = date('Y-m-d', strtotime($fecha_desde . ' +1 day'));
+			}
+			$resultados["promedioPorDia"] = number_format((float)$cantidadLlamadas / $cantidadDias, 2, '.', '');
+
+			$tiempoTotal = 0;
+			for($i = 0; $i < $cantidadLlamadas; $i++){
+				$tiempoTotal += $llamadas[$i]->diff;
+			}
+
+			$promedioSegundos = $tiempoTotal / $cantidadLlamadas;
+
+			$hours = floor($promedioSegundos / 3600);
+			$mins = floor($promedioSegundos / 60 % 60);
+			$secs = floor($promedioSegundos % 60);
+			$tiempoPromedio = sprintf('%02d:%02d:%02d', $hours, $mins, $secs); 
+
+			$resultados["promedioDuracion"] = $tiempoPromedio;
+			/*$tiempoTotal = 0;
+			$limite = $cantidadLlamadas - 1;*
+				$fecha1 = new DateTime($llamadas[$i]->fecha_hora_inicial);//fecha inicial
+				$fecha2 = new DateTime($llamadas[$i + 1]->fecha_hora_inicial);//fecha de cierre
+
+				$intervalo = $fecha1->diff($fecha2);
+				//$tiempoTotal += $intervalo->format('%H:%i:%s');
+			}
+			$resultados["promedioReporte"] = $intervalo;*/
+		}
+		else{
+			$resultados["promedioPorDia"] = "0";
+			$resultados["promedioDuracion"] = "00:00:00";
+		}
+
+		$resultados["cantidad"] = $cantidadLlamadas;
+		
+		return $resultados;
 	}
 }
 
