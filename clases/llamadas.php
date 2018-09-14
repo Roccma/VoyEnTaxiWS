@@ -17,6 +17,7 @@ class Llamadas extends ClaseBase{
 	private $cantidad_desconexiones;
 	private $desconectada;
 	private $dias_persistencia;
+	private $polyline;
 
 	/* Constructor */
 
@@ -254,6 +255,14 @@ class Llamadas extends ClaseBase{
 			}
 			return array("resultado" => $resultados);
 		} 
+	}
+
+	public function UpdatePolyline(){
+		if ($stmt = DB::conexion()->prepare("UPDATE llamadas SET polyline = ? WHERE id = ?")){
+			$stmt->bind_param("si",$this->polyline, $this->id);
+			$stmt->execute();
+			return array("result" => true); 
+		}
 	}
 
 	public function LlamadasExpiradas(){

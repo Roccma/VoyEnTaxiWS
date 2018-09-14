@@ -175,6 +175,11 @@ public function loginWS($params = array()){
 		return json_encode($llamadas->LlamadasExpiradas());
 	}
 
+	public function UpdatePolyline($params){
+		$llamadas = new Llamadas(array("id" => $params[0], "polyline" => $params[1]));
+		return json_encode($llamadas->UpdatePolyline());
+	}
+
 /*Fin WS VoyEnTaxi*/
 
  function listado($params=array()){

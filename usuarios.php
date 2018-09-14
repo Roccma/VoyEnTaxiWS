@@ -273,6 +273,19 @@ $app->get(
 	}
 );
 
+$app->get(
+	'/UpdatePolyline', function(){
+		$request = \Slim\Slim::getInstance() -> request();
+	
+		$polyline = $request -> params('polyline');
+		$id = $request -> params('id');
+
+		$ctrl = new ControladorUsuario();
+		echo $ctrl->UpdatePolyline(array($id, $polyline));
+		
+	}
+);
+
 //
 
 
