@@ -310,6 +310,10 @@ class Llamadas extends ClaseBase{
 				$i++;
 			}
 		}
+
+		$resultados["meses"] = $meses;
+		$resultados["anios"] = $anios;
+		$resultados["horas"] = $horas;
 		
 		if ($stmt = DB::conexion()->prepare("SELECT *, DATE_FORMAT(fecha_hora_inicial, '%Y-%m-%d') as fecha_desde, TIMESTAMPDIFF(SECOND, fecha_hora_inicial, fecha_hora_final) AS diff FROM llamadas WHERE estado = 0 ORDER BY fecha_hora_inicial ASC")){
 			$stmt->execute();
