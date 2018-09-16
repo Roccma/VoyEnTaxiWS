@@ -137,7 +137,16 @@ class Llamadas extends ClaseBase{
 	}
 
 	public function FinalizarLLamadaDesconectada(){
-		if ($stmt = DB::conexion()->prepare("UPDATE llamadas SET estado=0,fecha_hora_final=now() - INTERVAL 3 HOUR WHERE id=$this->id")){
+		$stmt = DB::conexion()->prepare("SELECT latitud_inicial, longitud_inicial FROM llamadas WHERE id = $this->id");
+		$stmt->execute();
+		$resultado = $stmt->get_result();
+		$latitud_inicial;
+		$longitud_inicial;
+		while($fila = $resultado->fetch_object()){
+			$latitud_inicial = $fila->latitud_inicial;
+			$longitud_inicial = $fila->longitud_inicial;
+		}
+		if ($stmt = DB::conexion()->prepare("UPDATE llamadas SET estado=0,fecha_hora_final=now() - INTERVAL 3 HOUR, latitud_final = $latitud_inicial, longitud_final = $longitud_inicial WHERE id=$this->id")){
 			$stmt->execute();
 			return 2; 
 		} 
