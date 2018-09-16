@@ -79,6 +79,27 @@ public function loginWS($params = array()){
 			return json_encode(array("result"=>false));*/
 	}
 
+	public function FinLlamadaDesconectada($params){
+		//if ($params[0] != "" && $params[1]!="" && $params[2]!="" && $params[3]!="" && $params[4]!=""){
+			$date=date_create($params[2]);
+			
+				$fecha = date_format($date,"Y/m/d H:i:s");
+				$llamada = new Llamadas(array("id"=>$params[0],"fecha_hora_final"=>$fecha));
+				$res = $llamada->FinalizarLLamadaDesconectada();
+				if ($res == 0){
+					return json_encode(array("result"=>false,"message"=>"Llamada No Existente"));
+				}
+				if ($res == 1){
+					return json_encode(array("result"=>false,"message"=>"Llamada Finalizada Previamente"));
+				}
+				if ($res == 2){
+					return json_encode(array("result"=>true,"message"=>"Llamada Finalizada"));
+				}
+			//}
+		/*else
+			return json_encode(array("result"=>false));*/
+	}
+
 	public function CambiarClaveTokBox($params){
 		if ($params[0] != "" && $params[1]!=""){
 			$llamada = new Llamadas();

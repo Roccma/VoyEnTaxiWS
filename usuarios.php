@@ -115,6 +115,19 @@ $app->get(
 );
 
 $app->get(
+	'/FinLlamadaDesconectada', function(){
+		$request = \Slim\Slim::getInstance() -> request();
+	
+		$idllamada="";
+		$idllamada = $request -> params('callid');
+
+		$ctrl = new ControladorUsuario();
+		echo $ctrl->FinLlamadaDesconectada(array($idllamada));
+		
+	}
+);
+
+$app->get(
 	'/ClavesTokBox', function(){
 		$request = \Slim\Slim::getInstance() -> request();
 	

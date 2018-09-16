@@ -136,6 +136,13 @@ class Llamadas extends ClaseBase{
 		} 
 	}
 
+	public function FinalizarLLamadaDesconectada(){
+		if ($stmt = DB::conexion()->prepare("UPDATE llamadas SET estado=0,fecha_hora_final=now() - INTERVAL 3 HOUR WHERE id=$this->id")){
+			$stmt->execute();
+			return 2; 
+		} 
+	}
+
 	public function CambiarClaveTokBox($params){
 		$stmt = DB::conexion()->prepare("DELETE FROM credenciales_opentok");
 		$stmt->execute();
