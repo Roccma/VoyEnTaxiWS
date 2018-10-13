@@ -276,7 +276,7 @@ class Llamadas extends ClaseBase{
 
 	public function UpdatePolyline(){
 		if ($stmt = DB::conexion()->prepare("UPDATE llamadas SET polyline = ?, distancia = ? WHERE id = ?")){
-			$stmt->bind_param("sid",$this->polyline, $this->distacia, $this->id);
+			$stmt->bind_param("ssi",$this->polyline, $this->distacia, $this->id);
 			$stmt->execute();
 			return array("result" => true); 
 		}
