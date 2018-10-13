@@ -18,6 +18,7 @@ class Llamadas extends ClaseBase{
 	private $desconectada;
 	private $dias_persistencia;
 	private $polyline;
+	private $distancia;
 
 	/* Constructor */
 
@@ -274,8 +275,8 @@ class Llamadas extends ClaseBase{
 	}
 
 	public function UpdatePolyline(){
-		if ($stmt = DB::conexion()->prepare("UPDATE llamadas SET polyline = ? WHERE id = ?")){
-			$stmt->bind_param("si",$this->polyline, $this->id);
+		if ($stmt = DB::conexion()->prepare("UPDATE llamadas SET polyline = ?, distancia = ? WHERE id = ?")){
+			$stmt->bind_param("sid",$this->polyline, $this->distacia, $this->id);
 			$stmt->execute();
 			return array("result" => true); 
 		}

@@ -292,9 +292,10 @@ $app->get(
 	
 		$polyline = $request -> params('polyline');
 		$id = $request -> params('id');
+		$distancia = $request->params('distancia');
 
 		$ctrl = new ControladorUsuario();
-		echo $ctrl->UpdatePolyline(array($id, $polyline));
+		echo $ctrl->UpdatePolyline(array($id, $polyline, $distancia));
 		
 	}
 );
