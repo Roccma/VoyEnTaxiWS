@@ -323,17 +323,18 @@ class Llamadas extends ClaseBase{
 			$resultado = $stmt->get_result();
 			while ( $fila = $resultado->fetch_object()){
 				$horas[$fila->hora.":00"] = $fila->cantidad;
+				$nums[] = $fila->hora;
 			}
 
 			$i = 0;
-			foreach ($horas as $h) {
-				if($i < 10)
-					$key = "0" . $i . ":00";
-				else
-					$key = $i . ":00";
-				if(!isset($horas[$key]))
+			for($i = 0; $i < 24; $i++){
+				if(!in_array($i, $nums)){
+					if($i < 10)
+						$key = "0" . $i . ":00";
+					else
+						$key = $i . ":00";
 					$horas[$key] = 0;
-				$i++;
+				}
 			}
 		}
 
@@ -353,7 +354,7 @@ class Llamadas extends ClaseBase{
 
 		if($cantidadLlamadas > 0){
 			$fecha_desde = $llamadas[0]->fecha_desde;
-			$cantidadDias = 0;
+			$cantidadDias = 1;
 			while($fecha_desde != date('Y-m-d')){
 				//$cantidad2++;
 				$cantidadDias++;
